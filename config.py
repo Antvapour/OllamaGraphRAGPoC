@@ -1,5 +1,5 @@
 from pydantic import ValidationError, field_validator
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -18,10 +18,12 @@ class Settings(BaseSettings):
     OLLAMA_LLM_MODEL: str = "deepseek-r1:14b"
     OLLAMA_EMBED_MODEL: str = "bge-m3"
 
+    model_config = SettingsConfigDict(env_file=".env")
+
     @field_validator('NEO4J_USERNAME', 'NEO4J_PASSWORD', 'AURA_INSTANCEID', 'AURA_INSTANCENAME', 
         'REDIS_USERNAME', 'REDIS_PASSWORD', 'OLLAMA_LLM_MODEL', 'OLLAMA_EMBED_MODEL')
     def validate_alphanumeric_and_underscore(cls, v, field):
-        if not all(char.isalnum() or char in '_-:' for char in v):
+        if not all(char.isalnum() or char in '_-: ' for char in v):
             raise ValueError(
                 f'{field.field_name} must contain only alphanumeric characters and underscores')
         return v

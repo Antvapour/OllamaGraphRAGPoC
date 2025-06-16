@@ -1,5 +1,7 @@
 RAG project note
-1. The questions like "what parameters I should check to optimize SAP HANA performance on VMWare vSphere?" might get a better response using vector search comparing to knowledge graph. We can implement a hybrid retriever
-2. Handling diagrams may require OCR. We need to assess whether it truly worth the effort (dev period, runtime cost)
+1. The questions like "what parameters I should check to optimize SAP HANA performance on VMWare vSphere?"
+    might get a better response using vector search comparing to knowledge graph. We can implement a hybrid retriever
+2. Handling images may require manually identify the images, apply OCR model and add the nodes.
+    We need to assess whether it truly worth the effort (dev period, runtime cost)
 3. need clarification on chain of thought portion
-4. prompt engineering
+4. prompt engineering (both llm and retriever)

@@ -129,25 +129,30 @@ graph_store = Neo4jGraphStore(
 storage_context = StorageContext.from_defaults(graph_store=graph_store)
 
 # NOTE: only need once to build the KG, can take a while!
-kg_index = KnowledgeGraphIndex.from_documents(
-    docs,
-    storage_context=storage_context,
-    max_triplets_per_chunk=8,
-    embed_model=embed_model,
-    show_progress=True
-)
+# kg_index = KnowledgeGraphIndex.from_documents(
+#     docs,
+#     storage_context=storage_context,
+#     max_triplets_per_chunk=8,       # could be fine-tuned
+#     embed_model=embed_model,
+#     # triplet_extraction_prompt="Extract detailed technical relations between components, settings, and tools",
+#     show_progress=True
+# )
 
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.retrievers import KnowledgeGraphRAGRetriever
+# from llama_index.core.postprocessor import SentenceTransformerRerank
 
 graph_rag_retriever = KnowledgeGraphRAGRetriever(
     storage_context=storage_context,
     verbose=True,
 )
 
+# reranker = SentenceTransformerRerank(model="cross-encoder/ms-marco-MiniLM-L-6-v2", top_n=3)
+
 query_engine = RetrieverQueryEngine.from_args(
     graph_rag_retriever,
     embed_model=embed_model,
+    # node_postprocessors=[reranker]
 )
 
 

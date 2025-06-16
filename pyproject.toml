@@ -11,7 +11,7 @@ readme = "README.md"
 python = "^3.12"
 ollama = "^0.4.7"
 nest-asyncio = "^1.6.0"
-llama-index = "^0.12.14"
+llama-index = {extras = ["neo4j"], version = "^0.12.42"}
 llama-index-llms-ollama = "^0.5.0"
 llama-index-embeddings-ollama = "^0.5.0"
 qdrant-client = "^1.13.1"
@@ -20,6 +20,9 @@ llama-index-vector-stores-redis = "^0.4.0"
 pydantic = "^2.10.6"
 pydantic-settings = "^2.7.1"
 neo4j = "^5.27.0"
+llama-index-vector-stores-neo4jvector = "^0.3.0"
+torch = "^2.7.1"
+sentence-transformers = "^4.1.0"
 
 
 [build-system]

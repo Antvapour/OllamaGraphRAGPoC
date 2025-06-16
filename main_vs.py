@@ -1,12 +1,12 @@
 import nest_asyncio
 
-from llama_index.core import SummaryIndex
-from llama_index.core import KnowledgeGraphIndex
-from llama_index.core import VectorStoreIndex
-from llama_index.core import Settings, SimpleDirectoryReader, PromptTemplate
-from llama_index.core import StorageContext, ServiceContext
+# from llama_index.core import SummaryIndex
+# from llama_index.core import KnowledgeGraphIndex
+# from llama_index.core import VectorStoreIndex
+from llama_index.core import Settings, SimpleDirectoryReader    # , PromptTemplate
+from llama_index.core import StorageContext                     # , ServiceContext
 
-from llama_index.graph_stores.neo4j import Neo4jGraphStore
+# from llama_index.graph_stores.neo4j import Neo4jGraphStore
 
 from llama_index.llms.ollama import Ollama
 
@@ -18,8 +18,8 @@ from llama_index.embeddings.ollama import OllamaEmbedding
 #from llama_index.vector_stores.qdrant import QdrantVectorStore
 #import qdrant_client
 
-from llama_index.vector_stores.redis import RedisVectorStore
-from redis import Redis
+# from llama_index.vector_stores.redis import RedisVectorStore
+# from redis import Redis
 
 from config import config
 
@@ -133,12 +133,14 @@ vector_store = Neo4jVectorStore(
 storage_context = StorageContext.from_defaults(vector_store=vector_store)
 
 # NOTE: only need once to build the KG, can take a while!
-index = VectorStoreIndex.from_documents(
-    documents=docs,
-    storage_context=storage_context,
-    embed_model=embed_model,
-    show_progress=True
-)
+# index = VectorStoreIndex.from_documents(
+#     documents=docs,
+#     storage_context=storage_context,
+#     embed_model=embed_model,
+#     show_progress=True
+# )
+
+index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
 
 vector_retriever = index.as_retriever(similarity_top_k=5)
 #
@@ -176,7 +178,7 @@ query_engine = RetrieverQueryEngine.from_args(
 )
 
 # get user query
-while (user_query := input("\n\nWhat do you want to know about these files?\n")):
+while user_query := input("\n\nWhat do you want to know about these files?\n"):
     # Generate the response
     response = query_engine.query(user_query,)
 
